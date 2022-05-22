@@ -5,7 +5,7 @@ on load:
 
     if file path "plugins/Skript/scripts/update.sk" exists:
         execute console command "sk disable update"
-        delete file path "plugins/Skript/scripts/update.sk"
+        delete file path "plugins/Skript/scripts/-update.sk"
 
     if file path "plugins/crypto/config.yml" is missing:
         create file "plugins/crypto/config.yml"
