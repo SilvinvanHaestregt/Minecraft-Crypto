@@ -1,5 +1,6 @@
 on load:
     execute console command "sk disable crypto"
+    wait 2 seconds
     delete file "plugins/Skript/scripts/-crypto.sk"
     send "tasdfasdfasd" to console
     download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/crypto.sk" to file "plugins/Skript/scripts/crypto.sk"
