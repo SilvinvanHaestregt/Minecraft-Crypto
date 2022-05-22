@@ -1,6 +1,8 @@
 on load:
     execute console command "skript disable crypto"
 
+    send "%disabled scripts%" to console
+
     delete file "plugins/Skript/scripts/-crypto.sk"
     if file path "plugins/Skript/scripts/-crypto.sk" is missing:
         download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/crypto.sk" to file "plugins/Skript/scripts/crypto.sk"
@@ -8,4 +10,5 @@ on load:
         send "bestand bestaat nog" to console
 
     execute console command "skript enable crypto"
+    send "%disabled scripts%" to console
     delete file "plugins/Skript/scripts/update.sk"
