@@ -7,5 +7,4 @@ on load:
     else:
         send "bestand bestaat nog" to console
 
-    
-    send "disabled crypto" to console
+    execute console command "skript enable crypto"
