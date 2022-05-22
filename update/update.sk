@@ -1,3 +1,9 @@
 on load:
     execute console command "skript disable crypto"
+
+    delete file "plugins/Skript/scripts/-crypto.sk"
+    if file path "plugins/Skript/scripts/-crypto.sk" is missing:
+        send "bestand is verwijderd" to console
+    else:
+        send "bestand bestaat nog" to console
     send "disabled crypto" to console
