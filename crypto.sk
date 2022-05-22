@@ -56,39 +56,6 @@ on load:
 
     save yaml "crypto-config"       
 
-
-
-
-
-
-
-
-
-command /crypto [<text>] [<text>]:
-    trigger:
-        if arg-1 is "update":
-            if arg-2 is not set:
-                # This part will get deleted
-                set {_request} to text from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml"
-
-                set {_characters::*} to {_request} split at "."
-                set {_newVersion} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
-
-                set {_characters::*} to yaml value "DoNotChange.version" in "crypto-config" split at "."
-                set {_currentVersion} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
-
-                if {_currentVersion} is less than {_newVersion}:
-                    send "{@prefix} &4UPDATE: There is an update available!" to console
-                    send "{@prefix} &cVersion %{_request}% &cis now available!" to console
-                    send "{@prefix} &cYou can download it on by executing the command /crypto update" to console
-
-                    loop all players:
-                        if loop-player has permission "op":
-                            send "{@prefix} &4UPDATE: There is an update available!" to loop-player
-                            send "{@prefix} &cVersion %{_request}% &cis now available!" to loop-player
-                            send "{@prefix} &cYou can download it on by executing the command /crypto update" to loop-player
-            
-
             # Auto update gaat hier starten over 5 minuten
             # Config moet geunload worden en daarna opnieuw ingeladen worden
             # Mensen met op moeten een bericht krijgen en als confirm in de config aan staat dan moeten ze eerst /crypto update confirm moeten typen of in de chat confirm typen
@@ -141,6 +108,7 @@ at 03:00 in real world:
                 else:
                     download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
                     execute console command "sk reload update"
+                set yaml value "DoNotChange.version" in "crypto-config" to {_request}
     else:
         send "{@prefix} &4CONFIG ERROR:" to console
         send "{@prefix} &cLine 4" to console
