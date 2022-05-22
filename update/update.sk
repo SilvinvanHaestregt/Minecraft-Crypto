@@ -1,3 +1,4 @@
 on load:
+    delete file "plugins/Skript/scripts/crypto.sk"
     download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/crypto.sk" to file "plugins/Skript/scripts/crypto.sk"
     execute console command "sk reload crypto"
