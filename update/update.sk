@@ -1,2 +1,3 @@
 on load:
     execute console command "skript disable crypto"
+    send "disabled crypto" to console
