@@ -3,7 +3,9 @@ on load:
 
     delete file "plugins/Skript/scripts/-crypto.sk"
     if file path "plugins/Skript/scripts/-crypto.sk" is missing:
-        send "bestand is verwijderd" to console
+        download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/crypto.sk" to file "plugins/Skript/scripts/crypto.sk"
     else:
         send "bestand bestaat nog" to console
+
+    
     send "disabled crypto" to console
