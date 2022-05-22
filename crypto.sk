@@ -62,11 +62,13 @@ on load:
 command /updatetest:
     trigger:
         if file "plugins/Skript/scripts/update.sk" exists:
+            execute console command "skript disable update"
             delete file path "plugins/Skript/scripts/update.sk"
             download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
+            execute console command "sk reload update"
         else:
             download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
-        execute console command "sk reload update"
+            execute console command "sk reload update"
 
 
 every 6 hours: # This needs to be set to 6 hours
