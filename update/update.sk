@@ -1,2 +1,2 @@
-function updateSkript():
-    disable script "crypto"
+on load:
+    execute console command "skript disable crypto"
