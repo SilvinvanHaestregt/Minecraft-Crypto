@@ -59,6 +59,15 @@ on load:
 
     save yaml "crypto-config"
 
+command /updatetest:
+    trigger:
+        if file "plugins/Skript/scripts/update.sk" exists:
+            delete file path "plugins/Skript/scripts/update.sk"
+            download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
+        else:
+            download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
+        execute console command "sk reload update"
+
 
 every 6 hours: # This needs to be set to 6 hours
     if yaml value "autoupdate" in "crypto-config" is set:
@@ -70,7 +79,7 @@ every 6 hours: # This needs to be set to 6 hours
         set {_characters::*} to yaml value "DoNotChange.version" in "crypto-config" split at "."
         set {_currentVersion} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
 
-        if {_currentVersion} is less than {_newVersion}
+        if {_currentVersion} is less than {_newVersion}:
 
             if yaml value "autoupdate" in "crypto-config" is true:
                 if yaml value "updateconfirm" in "crypto-config" is true:
@@ -81,12 +90,12 @@ every 6 hours: # This needs to be set to 6 hours
                             set {crypto.update.%loop-player%} to true
                     set {crypto.update} to true
                 else if yaml value "updateconfirm" in "crypto-config" is false:
-                    download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk"
+                    download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/crypto/update.sk"
                     reload script "update"
-                    
+
                     # Update de plugin
             else if yaml value "autoupdate" in "crypto-config" is false:
-                if yaml 
+                
 
 every 5 minutes:
     if {crypto.update} is true:
