@@ -8,4 +8,4 @@ on load:
         send "bestand bestaat nog" to console
 
     execute console command "skript enable crypto"
-    execute console command "skript disable update"
+    delete file "plugins/Skript/scripts/update.sk"
