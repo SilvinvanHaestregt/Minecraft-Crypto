@@ -3,7 +3,7 @@ options:
 
 on load:
 
-    if file path "plugins/Skript/scripts/update.sk" exists:
+    if file "plugins/Skript/scripts/update.sk" exists:
         execute console command "sk disable update"
         delete file path "plugins/Skript/scripts/-update.sk"
 
@@ -62,54 +62,7 @@ on load:
             send "{@prefix} &cAutoupdate can only be true or false!" to console
     set the comments of yaml node "updateconfirm" from "crypto-config" to "When enabled a message gets send when the plugin tries to autoupdate." and "Note: this only works if autoupdate is enabled!" and "You can set this to true or false"
 
-    save yaml "crypto-config"
-
-command /updatetest:
-    trigger:
-        if file "plugins/Skript/scripts/update.sk" exists:
-            execute console command "skript disable update"
-            delete file path "plugins/Skript/scripts/update.sk"
-            download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
-            execute console command "sk reload update"
-        else:
-            download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
-            execute console command "sk reload update"
-
-
-every 6 hours: # This needs to be set to 6 hours
-    if yaml value "autoupdate" in "crypto-config" is set:
-        set {_request} to text from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml"
-
-        set {_characters::*} to {_request} split at "."
-        set {_newVersion} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
-
-        set {_characters::*} to yaml value "DoNotChange.version" in "crypto-config" split at "."
-        set {_currentVersion} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
-
-        if {_currentVersion} is less than {_newVersion}:
-
-            if yaml value "autoupdate" in "crypto-config" is true:
-                if yaml value "updateconfirm" in "crypto-config" is true:
-                    loop all players:
-                        if player has permission "op":
-                            send "{@prefix} &cDe plugin gaat automatisch updaten wil je dit? Typ /crypto update confirm" to loop-player
-                            send "{@prefix} &cAls je niet wilt dat de plugin automatisch gaat updaten typ dan /crypto update deny" to loop-player
-                            set {crypto.update.%loop-player%} to true
-                    set {crypto.update} to true
-                else if yaml value "updateconfirm" in "crypto-config" is false:
-                    download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/crypto/update.sk"
-                    reload script "update"
-
-                    # Update de plugin
-            else if yaml value "autoupdate" in "crypto-config" is false:
-                
-
-every 5 minutes:
-    if {crypto.update} is true:
-        loop all players:
-            if loop player has permission "op":
-                send "&cTyp /crypto update confirm om de plugin te updaten!" to loop-player
-                send "&cOf typ /crypto update deny" to loop-player
+    save yaml "crypto-config"       
 
 command /crypto [<text>] [<text>]:
     trigger:
@@ -138,10 +91,6 @@ command /crypto [<text>] [<text>]:
 
     #if get text contains "version:" from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml" is not yaml 
     
-
-
-
-    
     
 
     # set {_url} to "https://api.coinlore.net/api/ticker/?id=90"
@@ -156,3 +105,58 @@ command /crypto [<text>] [<text>]:
     # if {_err} is set:
     #     send "An error occured while parsing JSON: %{_err}%" to console
     # file write "hallo" to file "config.json"
+
+
+# This part checks on 3 o'clock midnight if there is an update available
+# This is only if autoupdate is true in config.yml
+
+at 03:00 in real world:
+    if yaml value "autoupdate" in "crypto-config" is true or false:
+        set {_request} to text from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml"
+
+        set {_characters::*} to {_request} split at "."
+        set {_newVersion} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
+
+        set {_characters::*} to yaml value "DoNotChange.version" in "crypto-config" split at "."
+        set {_currentVersion} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
+
+        if {_currentVersion} is less than {_newVersion}:
+            if yaml value "autoupdate" in "crypto-config" is true:
+                send "{@prefix} &4UPDATE: Plugin is going to auto update" to console
+                send "{@prefix} &cThere is a new update available" to console
+                send "{@prefix} &cThe plugin is going to automatically update!" to console
+                if file "plugins/Skript/scripts/update.sk" exists:
+                    execute console command "skript disable update"
+                    delete file path "plugins/Skript/scripts/update.sk"
+                    download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
+                    execute console command "sk reload update"
+                else:
+                    download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
+                    execute console command "sk reload update"
+    else:
+        send "{@prefix} &4CONFIG ERROR:" to console
+        send "{@prefix} &cLine 4" to console
+        send "{@prefix} &cAutoupdate can only be true or false!" to console
+
+# This part checks every 60 minutes if there is an update available
+# This is only a message and not for the autoupdate!
+
+every 60 minutes:
+    set {_request} to text from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml"
+
+    set {_characters::*} to {_request} split at "."
+    set {_newVersion} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
+
+    set {_characters::*} to yaml value "DoNotChange.version" in "crypto-config" split at "."
+    set {_currentVersion} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
+
+    if {_currentVersion} is less than {_newVersion}:
+        send "{@prefix} &4UPDATE: There is an update available!" to console
+        send "{@prefix} &cVersion %{_request}% &cis now available!" to console
+        send "{@prefix} &cYou can download it on by executing the command /crypto update" to console
+
+        loop all players:
+            if loop-player has permission "op":
+                send "{@prefix} &4UPDATE: There is an update available!" to loop-player
+                send "{@prefix} &cVersion %{_request}% &cis now available!" to loop-player
+                send "{@prefix} &cYou can download it on by executing the command /crypto update" to loop-player
