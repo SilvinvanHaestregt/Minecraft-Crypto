@@ -31,6 +31,7 @@ on load:
             if {_currentVersion} is less than {_newVersion}:                
                 send "{@prefix} &4UPDATE: There is an update available!" to console
                 send "{@prefix} &cVersion %{_request}% &cis now available!" to console
+                send "{@prefix} &cYour current version is %{_version}%." to console
                 send "{@prefix} &cYou can download it on by executing the command /crypto update" to console
             else if {_currentVersion} is greater than {_newVersion}:
                 send "{@prefix} &4ERROR: Plugin version is incorrect!"
