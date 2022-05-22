@@ -156,7 +156,3 @@ command /crypto [<text>] [<text>]:
     # if {_err} is set:
     #     send "An error occured while parsing JSON: %{_err}%" to console
     # file write "hallo" to file "config.json"
-
-    #ALS ALLES GOED GING STAAT DEZE REGEL NU IN DE SERVER!
-
-    #ALS HET KLOPT STAAT DEZE LIJN HIER NU OOK EN IS ER NET EENTJE VERWIJDERD
