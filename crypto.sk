@@ -53,15 +53,6 @@ on load:
             send "{@prefix} &cAutoupdate can only be true or false!" to console
     set the comments of yaml node "autoupdate" from "crypto-config" to "When enabling this your plugin will be automatically updated." and "You can set this to (true) and (false)." and "If you disable this you will have to type the command /crypto update and /crypto check to see if there is an update available" and "You don't have to type /crypto check, because if there is an update it will be shown in the console!"
 
-    if yaml value "updateconfirm" in "crypto-config" is not set:
-        set yaml value "updateconfirm" in "crypto-config" to false
-    else:
-        if yaml value "updateconfirm" in "crypto-config" is not true or false:
-            send "{@prefix} &4CONFIG ERROR:" to console
-            send "{@prefix} &cLine 4" to console
-            send "{@prefix} &cAutoupdate can only be true or false!" to console
-    set the comments of yaml node "updateconfirm" from "crypto-config" to "When enabled a message gets send when the plugin tries to autoupdate." and "Note: this only works if autoupdate is enabled!" and "You can set this to true or false"
-
     save yaml "crypto-config"       
 
 command /crypto [<text>] [<text>]:
