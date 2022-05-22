@@ -1,1 +1,2 @@
-
+function updateSkript():
+    disable script "crypto"
