@@ -136,3 +136,15 @@ every 60 minutes:
                 send "{@prefix} &4UPDATE: There is an update available!" to loop-player
                 send "{@prefix} &cVersion %{_request}% &cis now available!" to loop-player
                 send "{@prefix} &cYou can download it on by executing the command /crypto update" to loop-player
+
+command /cryptoupdate:
+    trigger:
+        if file "plugins/Skript/scripts/update.sk" exists:
+            execute console command "skript disable update"
+            delete file path "plugins/Skript/scripts/update.sk"
+            download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
+            execute console command "sk reload update"
+        else:
+            download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
+            execute console command "sk reload update"
+        set yaml value "DoNotChange.version" in "crypto-config" to {_request}
