@@ -3,6 +3,10 @@ options:
 
 on load:
 
+    if file path "plugins/Skript/scripts/update.sk" is not missing:
+        execute console command "sk disable update"
+        delete file "plugins/Skript/scripts/-update.sk"
+
     if file path "plugins/crypto/config.yml" is missing:
         create file "plugins/crypto/config.yml"
     else:
@@ -166,3 +170,4 @@ command /cryptoupdate:
             download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
             execute console command "sk reload update"
         set yaml value "DoNotChange.version" in "crypto-config" to {_version}
+        save yaml "crypto-config"
