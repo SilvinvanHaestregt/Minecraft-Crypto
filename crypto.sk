@@ -181,7 +181,9 @@ command /crypto [<text>]:
                 set {_characters::*} to yaml value "DoNotChange.version" in "crypto-config" split at "."
                 set {_currentVersionCharacters} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
 
-                if file path "plugins/Skript/scripts/update.sk" or "plugins/Skript/scripts/-update.sk" exists:
-                    delete file path "plugins/Skript/scripts/update.sk" or "plugins/Skript/scripts/-update.sk"
+                if file path "plugins/Skript/scripts/update.sk" exists:
+                    delete file path "plugins/Skript/scripts/update.sk"
+                else if file path "plugins/Skript/scripts/-update.sk" exists:
+                    delete file path "plugins/Skript/scripts/-update.sk"
                 download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
-                execute console command "sk reload update"
+                reload script "update"
