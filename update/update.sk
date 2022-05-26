@@ -8,6 +8,16 @@
 
 
 on load:
+    set {_version} to text from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml"
+    set {_currentVersion} to yaml value "DoNotChange.version" in "crypto-config"
+    send "New version: %{_version}%" to console
+    send "Current version: %{_currentVersion}%" to console
+
+    set {_characters::*} to {_version} split at "."
+    set {_newVersionCharacters} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
+
+    set {_characters::*} to yaml value "DoNotChange.version" in "crypto-config" split at "."
+    set {_currentVersionCharacters} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
     execute console command "sk disable crypto"
     wait 2 seconds
     delete file "plugins/Skript/scripts/-crypto.sk"
