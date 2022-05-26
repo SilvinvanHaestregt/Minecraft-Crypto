@@ -169,5 +169,3 @@ command /cryptoupdate:
         else:
             download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
             execute console command "sk reload update"
-        set yaml value "DoNotChange.version" in "crypto-config" to {_version}
-        save yaml "crypto-config"
