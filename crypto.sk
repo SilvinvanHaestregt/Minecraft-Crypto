@@ -157,16 +157,13 @@ on load:
 #                 send "{@prefix} &cVersion %{_version}% &cis now available!" to loop-player
 #                 send "{@prefix} &cYou can download it on by executing the command /crypto update" to loop-player
 
-command /cryptoupdate:
-    trigger:
-        set {_version} to text from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml"
-        if file "plugins/Skript/scripts/update.sk" exists:
-            delete file path "plugins/Skript/scripts/update.sk"
-            download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
-            execute console command "sk reload update"
-        else:
-            download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
-            execute console command "sk reload update"
+
+# Everytime that a player joins that has op or the permission crypto.admin, there will be checked if there is an update available.
+# If there is and update available a message will be send to the player.
+
+on join:
+    if player has permission "op" or "crypto.admin":
+        # Check if there is an update available, if that is the case a message will be shown to the player
 
 command /crypto [<text>]:
     trigger:
