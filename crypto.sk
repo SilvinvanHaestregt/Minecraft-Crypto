@@ -16,7 +16,7 @@ on load:
     if online status of url "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml" is true:
         if yaml value "DoNotChange.version" in "crypto-config" is not set:
             set {_version} to text from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml"
-            set yaml value "DoNotChange.version" in "crypto-config" to "%{_version}%"
+            set yaml value "DoNotChange.version" in "crypto-config" to "%{_currentVersion}%"
             set the comments of yaml node "DoNotChange" in "crypto-config" to "Do not change this! If you still do so it could break the plugin!" and "If the version isn't right it will be shown in the config."
             save yaml "crypto-config"
         else:
@@ -32,7 +32,7 @@ on load:
             if {_currentVersionCharacters} is less than {_newVersionCharacters}:                
                 send "{@prefix} &4UPDATE: There is an update available!" to console
                 send "{@prefix} &cVersion %{_version}% &cis now available!" to console
-                send "{@prefix} &cYour current version is %{_version}%." to console
+                send "{@prefix} &cYour current version is %{_currentVersion}%." to console
                 send "{@prefix} &cYou can download it on by executing the command /crypto update" to console
             else if {_currentVersionCharacters} is greater than {_newVersionCharacters}:
                 send "{@prefix} &4ERROR: Plugin version is incorrect!"
