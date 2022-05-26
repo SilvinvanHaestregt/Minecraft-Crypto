@@ -3,10 +3,6 @@ options:
 
 on load:
 
-    if file "plugins/Skript/scripts/update.sk" exists:
-        execute console command "sk disable update"
-        delete file path "plugins/Skript/scripts/-update.sk"
-
     if file path "plugins/crypto/config.yml" is missing:
         create file "plugins/crypto/config.yml"
     else:
@@ -16,7 +12,7 @@ on load:
     if online status of url "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml" is true:
         if yaml value "DoNotChange.version" in "crypto-config" is not set:
             set {_version} to text from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml"
-            set yaml value "DoNotChange.version" in "crypto-config" to "%{_currentVersion}%"
+            set yaml value "DoNotChange.version" in "crypto-config" to "%{_version}%"
             set the comments of yaml node "DoNotChange" in "crypto-config" to "Do not change this! If you still do so it could break the plugin!" and "If the version isn't right it will be shown in the config."
             save yaml "crypto-config"
         else:
@@ -155,7 +151,6 @@ every 60 minutes:
 command /cryptoupdate:
     trigger:
         set {_version} to text from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml"
-        send "%{_version}%" to player
         if file "plugins/Skript/scripts/update.sk" exists:
             execute console command "skript disable update"
             delete file path "plugins/Skript/scripts/update.sk"
@@ -165,6 +160,3 @@ command /cryptoupdate:
             download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
             execute console command "sk reload update"
         set yaml value "DoNotChange.version" in "crypto-config" to {_version}
-        save yaml "crypto-config"
-        set {_currentVersion} to yaml value "DoNotChange.version" in "crypto-config"
-        send "%{_currentVersion}%" to player
