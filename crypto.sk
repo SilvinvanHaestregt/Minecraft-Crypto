@@ -100,34 +100,34 @@ on join:
     if player has permission "op":
 
 
-at 03:00 in real world:
-    if yaml value "autoupdate" in "crypto-config" is true or false:
-        set {_version} to text from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml"
+# at 03:00 in real world:
+#     if yaml value "autoupdate" in "crypto-config" is true or false:
+#         set {_version} to text from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml"
 
-        set {_characters::*} to {_version} split at "."
-        set {_newVersionCharacters} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
+#         set {_characters::*} to {_version} split at "."
+#         set {_newVersionCharacters} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
 
-        set {_characters::*} to yaml value "DoNotChange.version" in "crypto-config" split at "."
-        set {_currentVersionCharacters} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
+#         set {_characters::*} to yaml value "DoNotChange.version" in "crypto-config" split at "."
+#         set {_currentVersionCharacters} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
 
-        if {_currentVersionCharacters} is less than {_newVersionCharacters}:
-            if yaml value "autoupdate" in "crypto-config" is true:
-                send "{@prefix} &4UPDATE: Plugin is going to auto update" to console
-                send "{@prefix} &cThere is a new update available" to console
-                send "{@prefix} &cThe plugin is going to automatically update!" to console
-                if file "plugins/Skript/scripts/update.sk" exists:
-                    execute console command "skript disable update"
-                    delete file path "plugins/Skript/scripts/update.sk"
-                    download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
-                    execute console command "sk reload update"
-                else:
-                    download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
-                    execute console command "sk reload update"
-                set yaml value "DoNotChange.version" in "crypto-config" to {_version}
-    else:
-        send "{@prefix} &4CONFIG ERROR:" to console
-        send "{@prefix} &cLine 4" to console
-        send "{@prefix} &cAutoupdate can only be true or false!" to console
+#         if {_currentVersionCharacters} is less than {_newVersionCharacters}:
+#             if yaml value "autoupdate" in "crypto-config" is true:
+#                 send "{@prefix} &4UPDATE: Plugin is going to auto update" to console
+#                 send "{@prefix} &cThere is a new update available" to console
+#                 send "{@prefix} &cThe plugin is going to automatically update!" to console
+#                 if file "plugins/Skript/scripts/update.sk" exists:
+#                     execute console command "skript disable update"
+#                     delete file path "plugins/Skript/scripts/update.sk"
+#                     download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
+#                     execute console command "sk reload update"
+#                 else:
+#                     download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
+#                     execute console command "sk reload update"
+#                 set yaml value "DoNotChange.version" in "crypto-config" to {_version}
+#     else:
+#         send "{@prefix} &4CONFIG ERROR:" to console
+#         send "{@prefix} &cLine 4" to console
+#         send "{@prefix} &cAutoupdate can only be true or false!" to console
 
 # This part checks every 60 minutes if there is an update available
 # This is only a message and not for the autoupdate!
