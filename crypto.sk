@@ -166,3 +166,5 @@ command /crypto [<text>]:
         if player has permission "op":
             if file "plugins/Skript/scripts/update.sk" exists:
                 send "bestaat" to console
+            else:
+                send "bestaat niet!" to console
