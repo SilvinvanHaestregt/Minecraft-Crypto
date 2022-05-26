@@ -96,8 +96,8 @@ on load:
 # This part checks on 3 o'clock midnight if there is an update available
 # This is only if autoupdate is true in config.yml
 
-on join:
-    if player has permission "op":
+# on join:
+#     if player has permission "op":
 
 
 # at 03:00 in real world:
