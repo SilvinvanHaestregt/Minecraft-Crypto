@@ -18,6 +18,8 @@ on load:
         else:
             set {_version} to text from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml"
             set {_currentVersion} to yaml value "DoNotChange.version" in "crypto-config"
+            send "New version: %{_version}%" to console
+            send "Current version: %{_currentVersion}%" to console
 
             set {_characters::*} to {_version} split at "."
             set {_newVersionCharacters} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
@@ -55,11 +57,16 @@ on load:
     if skript-yaml value "coins" in "crypto-config" is not set:
         if skript-yaml value "coins" in "crypto-config" doesn't contain "bitcoin":
             add "bitcoin" to skript-yaml list "coins" in "crypto-config"
-        add "ethereum" to skript-yaml list "coins" in "crypto-config"
-        add "maker" to skript-yaml list "coins" in "crypto-config"
-        add "bitcoin-cash" to skript-yaml list "coins" in "crypto-config"
-        add "litecoin" to skript-yaml list "coins" in "crypto-config"
-        add "dash" to skript-yaml list "coins" in "crypto-config"
+        if skript-yaml value "coins" in "crypto-config" doesn't contain "ethereum":
+            add "ethereum" to skript-yaml list "coins" in "crypto-config"
+        if skript-yaml value "coins" in "crypto-config" doesn't contain "maker":
+            add "maker" to skript-yaml list "coins" in "crypto-config"
+        if skript-yaml value "coins" in "crypto-config" doesn't contain "bitcoin-cash":
+            add "bitcoin-cash" to skript-yaml list "coins" in "crypto-config"
+        if skript-yaml value "coins" in "crypto-config" doesn't contain "litecoin":
+            add "litecoin" to skript-yaml list "coins" in "crypto-config"
+        if skript-yaml value "coins" in "crypto-config" doesn't contain "dash":
+            add "dash" to skript-yaml list "coins" in "crypto-config"
 
     save yaml "crypto-config"
 
@@ -152,7 +159,6 @@ command /cryptoupdate:
     trigger:
         set {_version} to text from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml"
         if file "plugins/Skript/scripts/update.sk" exists:
-            execute console command "skript disable update"
             delete file path "plugins/Skript/scripts/update.sk"
             download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
             execute console command "sk reload update"
@@ -160,11 +166,3 @@ command /cryptoupdate:
             download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
             execute console command "sk reload update"
         set yaml value "DoNotChange.version" in "crypto-config" to {_version}
-
-command /crypto [<text>]:
-    trigger:
-        if player has permission "op":
-            if file "plugins/Skript/scripts/update.sk" exists:
-                send "bestaat" to console
-            else:
-                send "bestaat niet!" to console
