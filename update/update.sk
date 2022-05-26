@@ -16,10 +16,20 @@ on load:
 
     set {_characters::*} to yaml value "DoNotChange.version" in "crypto-config" split at "."
     set {_currentVersionCharacters} to "%{_characters::1}%%{_characters::2}%%{_characters::3}%" parsed as integer
-    execute console command "sk disable crypto"
+
+    # Disable the main plugin file 'crypto.sk'
+    disable script "crypto"
     wait 2 seconds
+
+    # Delete the main plugin file now called '-crypto.sk'
     delete file "plugins/Skript/scripts/-crypto.sk"
+
+    # Download the new main plugin file called 'crypto.sk'
     download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/crypto.sk" to file "plugins/Skript/scripts/crypto.sk"
-    execute console command "sk reload crypto"
+
+    # Enable and reload the main plugin file 'crypto.sk'
+    reload script "crypto"
+
+    # Set the version of the plugin in config.yml to the new version
     set yaml value "DoNotChange.version" in "crypto-config" to {_version}
     save yaml "crypto-config"
