@@ -155,6 +155,7 @@ every 60 minutes:
 command /cryptoupdate:
     trigger:
         set {_version} to text from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/version.yml"
+        send "%{_version}%" to player
         if file "plugins/Skript/scripts/update.sk" exists:
             execute console command "skript disable update"
             delete file path "plugins/Skript/scripts/update.sk"
@@ -164,3 +165,6 @@ command /cryptoupdate:
             download file from "https://raw.githubusercontent.com/SilvinvanHaestregt/Minecraft-Crypto/main/update/update.sk" to file "plugins/Skript/scripts/update.sk"
             execute console command "sk reload update"
         set yaml value "DoNotChange.version" in "crypto-config" to {_version}
+        save yaml "crypto-config"
+        set {_currentVersion} to yaml value "DoNotChange.version" in "crypto-config"
+        send "%{_currentVersion}%" to player
