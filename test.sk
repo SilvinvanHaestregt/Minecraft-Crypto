@@ -1,0 +1,3 @@
+command /testurl:
+  trigger:
+    send "hello" to player
